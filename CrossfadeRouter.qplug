@@ -5,7 +5,7 @@
 PluginInfo = {
   Name = "Crossfade Router",
   Author = "Eugene Dunn",
-  BuildVersion = "1.2.0.23",
+  BuildVersion = "1.2.1.0",
   Version = "1.2",
   Id = "333c8f3d-a3e4-46fe-9c44-d76e3d95d188",
   Description = "A drop in replacement for a Router Component that utilizes internal crossfaders"
@@ -50,7 +50,7 @@ function GetProperties()
       Name = "Input Count",
       Type = "integer",
       Value = 8,
-      min = 2,
+      Min = 2,
       Max = 32
     }
   )
@@ -60,7 +60,7 @@ function GetProperties()
       Name = "Output Count",
       Type = "integer",
       Value = 8,
-      min = 1,
+      Min = 1,
       Max = 32
     }
   )
@@ -79,7 +79,7 @@ function GetProperties()
       Name = "Count",
       Type = "integer",
       Value = 8,
-      min = 2,
+      Min = 2,
       Max = 64
     }
   )
