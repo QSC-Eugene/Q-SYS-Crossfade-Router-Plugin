@@ -5,8 +5,8 @@
 PluginInfo = {
   Name = "Crossfade Router",
   Author = "Eugene Dunn",
-  BuildVersion = "1.2.1.0",
-  Version = "1.2",
+  BuildVersion = "1.3.1.2",
+  Version = "1.3.1.2",
   Id = "333c8f3d-a3e4-46fe-9c44-d76e3d95d188",
   Description = "A drop in replacement for a Router Component that utilizes internal crossfaders"
 }
@@ -51,7 +51,7 @@ function GetProperties()
       Type = "integer",
       Value = 8,
       Min = 2,
-      Max = 32
+      Max = 128
     }
   )
   table.insert(
@@ -61,7 +61,7 @@ function GetProperties()
       Type = "integer",
       Value = 8,
       Min = 1,
-      Max = 32
+      Max = 128
     }
   )
   table.insert(
@@ -478,7 +478,7 @@ function GetControlLayout(props)
   local layout = {}
   local graphics = {}
   local current_page = PageNames[props["page_index"].Value]
-  
+    
   local FSize = 11
   local labelSize = {40, 16}
   local textboxSize = {36, 16}
@@ -697,107 +697,13 @@ if Controls then
   Inputs = Properties["Input Count"].Value
   Outputs = Properties["Output Count"].Value
   
-    local XFaders = {
-      XFader1,
-      XFader2,
-      XFader3,
-      XFader4,
-      XFader5,
-      XFader6,
-      XFader7,
-      XFader8,
-      XFader9,
-      XFader10,
-      XFader11,
-      XFader12,
-      XFader13,
-      XFader14,
-      XFader15,
-      XFader16,
-      XFader17,
-      XFader18,
-      XFader19,
-      XFader20,
-      XFader21,
-      XFader22,
-      XFader23,
-      XFader24,
-      XFader25,
-      XFader26,
-      XFader27,
-      XFader28,
-      XFader29,
-      XFader30,
-      XFader31,
-      XFader32,
-      XFader33,
-      XFader34,
-      XFader35,
-      XFader36,
-      XFader37,
-      XFader38,
-      XFader39,
-      XFader40,
-      XFader41,
-      XFader42,
-      XFader43,
-      XFader44,
-      XFader45,
-      XFader46,
-      XFader47,
-      XFader48,
-      XFader49,
-      XFader50,
-      XFader51,
-      XFader52,
-      XFader53,
-      XFader54,
-      XFader55,
-      XFader56,
-      XFader57,
-      XFader58,
-      XFader59,
-      XFader60,
-      XFader61,
-      XFader62,
-      XFader63,
-      XFader64
-    }
-    local Gains = {
-      Gain1,
-      Gain2,
-      Gain3,
-      Gain4,
-      Gain5,
-      Gain6,
-      Gain7,
-      Gain8,
-      Gain9,
-      Gain10,
-      Gain11,
-      Gain12,
-      Gain13,
-      Gain14,
-      Gain15,
-      Gain16,
-      Gain17,
-      Gain18,
-      Gain19,
-      Gain20,
-      Gain21,
-      Gain22,
-      Gain23,
-      Gain24,
-      Gain25,
-      Gain26,
-      Gain27,
-      Gain28,
-      Gain29,
-      Gain30,
-      Gain31,
-      Gain32
-    }
-  local CurrentSource = {}
+  XFaders = {}
+  Gains = {}
+  for i = 1, Properties["Output Count"].Value do
+    table.insert(XFaders,_G["XFader" .. i])
+    table.insert(Gains,_G["Gain" .. i])
+  end
+  CurrentSource = {}
   
   function SetFB(outputIndex)
     Controls["select_" .. outputIndex].Value = CurrentSource[outputIndex]
