@@ -3,9 +3,9 @@ table.insert(
   {
     Name = "Input Count",
     Type = "integer",
-    Value = 4,
+    Value = 8,
     Min = 2,
-    Max = 64
+    Max = 128
   }
 )
 table.insert(
@@ -13,9 +13,9 @@ table.insert(
   {
     Name = "Output Count",
     Type = "integer",
-    Value = 4,
-    Min = 2,
-    Max = 64
+    Value = 8,
+    Min = 1,
+    Max = 128
   }
 )
 table.insert(
@@ -37,4 +37,3 @@ table.insert(
     Max = 64
   }
 )
-

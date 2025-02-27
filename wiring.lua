@@ -12,8 +12,15 @@ if props["Type"].Value == "Mono" then
     table.insert(
       wiring,
       {
-        "XFader" .. x .. " Output",
+        "Gain" .. x .. " Output",
         "Output " .. x
+      }
+    )
+    table.insert(
+      wiring,
+      {
+        "XFader" .. x .. " Output",
+        "Gain" .. x .. " Input"
       }
     )
     table.insert(
@@ -52,15 +59,29 @@ elseif props["Type"].Value == "Stereo" then
     table.insert(
       wiring,
       {
-        "XFader" .. x .. " Output Left",
+        "Gain" .. x .. " Output Left",
         "Output " .. x .. " Left"
       }
     )
     table.insert(
       wiring,
       {
-        "XFader" .. x .. " Output Right",
+        "Gain" .. x .. " Output Right",
         "Output " .. x .. " Right"
+      }
+    )
+    table.insert(
+      wiring,
+      {
+        "XFader" .. x .. " Output Left",
+        "Gain" .. x .. " Input Left"
+      }
+    )
+    table.insert(
+      wiring,
+      {
+        "XFader" .. x .. " Output Right",
+        "Gain" .. x .. " Input Right"
       }
     )
     table.insert(
@@ -109,8 +130,15 @@ elseif props["Type"].Value == "Multi-channel" then
       table.insert(
         wiring,
         {
-          "XFader" .. x .. " Output Channel " .. y,
+          "Gain" .. x .. " Output Channel " .. y,
           "Output " .. x .. " Channel " .. y
+        }
+      )
+      table.insert(
+        wiring,
+        {
+          "XFader" .. x .. " Output Channel " .. y,
+          "Gain" .. x .. " Input Channel " .. y
         }
       )
       table.insert(

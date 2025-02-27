@@ -1,18 +1,18 @@
 Inputs = Properties["Input Count"].Value
 Outputs = Properties["Output Count"].Value
 
---[[ #include "FaderList.lua" ]]
-local CurrentSource = {}
-
-local choices = {}
-for x = 1, Inputs do
-  table.insert(choices, x)
+XFaders = {}
+Gains = {}
+for i = 1, Properties["Output Count"].Value do
+  table.insert(XFaders,_G["XFader" .. i])
+  table.insert(Gains,_G["Gain" .. i])
 end
+CurrentSource = {}
 
 function SetFB(outputIndex)
-  Controls["select." .. outputIndex].String = CurrentSource[outputIndex]
+  Controls["select_" .. outputIndex].Value = CurrentSource[outputIndex]
   for y = 1, Inputs do
-    Controls["Output." .. outputIndex .. ".input." .. y .. ".select"].Boolean = (y == CurrentSource[outputIndex])
+    Controls["output_" .. outputIndex .. "_input_" .. y .. "_select"].Boolean = (y == CurrentSource[outputIndex])
   end
 end
 
@@ -25,7 +25,6 @@ function GotoSource(input, output)
 end
 
 for x = 1, Outputs do
-  Controls["select." .. x].Choices = choices
   if XFaders[x]["crossfade.to.A"].Boolean then
     CurrentSource[x] = math.floor(Router["select." .. x].Value)
   else
@@ -33,17 +32,27 @@ for x = 1, Outputs do
   end
   SetFB(x)
 
-  Controls["select." .. x].EventHandler = function(ctrl)
-    GotoSource(tonumber(ctrl.String), x)
+  Controls["select_" .. x].EventHandler = function(ctrl)
+    GotoSource(ctrl.Value, x)
   end
   for y = 1, Inputs do
-    Controls["Output." .. x .. ".input." .. y .. ".select"].EventHandler = function(ctrl)
+    Controls["output_" .. x .. "_input_" .. y .. "_select"].EventHandler = function(ctrl)
       if ctrl.Boolean then
         GotoSource(y, x)
       elseif not ctrl.Boolean and y == CurrentSource[x] then
         ctrl.Boolean = true
       end
     end
+  end
+
+  XFaders[x].position.EventHandler = function(ctrl)
+    Controls["fading_" .. x].Boolean = not (ctrl.Position == 1 or ctrl.Position == 0)
+  end
+  Gains[x].mute.EventHandler = function(ctrl)
+    Controls["mute_" .. x].Boolean = ctrl.Boolean
+  end
+  Controls["mute_" .. x].EventHandler = function(ctrl)
+    Gains[x].mute.Boolean = ctrl.Boolean
   end
 end
 
@@ -52,13 +61,13 @@ if Controls["Crossfade Type"].String == "" then
   Controls["Crossfade Type"].String = XFaders[1]["crossfade.type"].String
 end
 Controls["Crossfade Type"].EventHandler = function(ctrl)
-  for x = 1, (Outputs) do
+  for x = 1, Outputs do
     XFaders[x]["crossfade.type"].String = ctrl.String
   end
 end
 Controls["Crossfade Time"].Value = XFaders[1]["crossfade.time"].Value
 Controls["Crossfade Time"].EventHandler = function(ctrl)
-  for x = 1, (Outputs) do
+  for x = 1, Outputs do
     XFaders[x]["crossfade.time"].Value = ctrl.Value
   end
 end

@@ -1,7 +1,5 @@
--- layout["code"] = {PrettyName = "Code",Style = "None"}
-
 local current_page = PageNames[props["page_index"].Value]
-
+  
 local FSize = 11
 local labelSize = {40, 16}
 local textboxSize = {36, 16}
@@ -18,7 +16,7 @@ if current_page == PageNames[1] then --Routing
       Position = {x + labelSize[1] + 4, y},
       Size = {
         8 + (props["Output Count"].Value * textboxSize[1]),
-        28 + ((props["Input Count"].Value + 2) * textboxSize[2]) + 4
+        28 + ((props["Input Count"].Value + 2) * textboxSize[2]) + 44
       },
       Text = "Output",
       HTextAlign = "Left",
@@ -28,7 +26,76 @@ if current_page == PageNames[1] then --Routing
       FontSixe = FSize
     }
   )
-  y = 28 + labelSize[2] --was 28
+  y = 28 + labelSize[2]
+  table.insert(
+    graphics,
+    {
+      Type = "Label",
+      Position = {x, y},
+      Size = labelSize,
+      Text = "Mute",
+      HTextAlign = "Right",
+      Color = Colors.LightGray,
+      FontSixe = FSize
+    }
+  )
+  x = x + labelSize[1] + 8
+
+  for i = 1, props["Output Count"].Value do
+    layout["mute_" .. i] = {
+      Style = "Button",
+      ButtonStyle = "Toggle",
+      Position = {x, y},
+      PrettyName = "Output " .. i .. "~Mute",
+      Size = buttonSize,
+      FontSize = FSize - 2,
+      Padding = 0,
+      Color = {223, 0, 36}
+    }
+    table.insert(
+      graphics,
+      {
+        Type = "Label",
+        Position = {x, y - labelSize[2]},
+        Size = textboxSize,
+        Text = tostring(i),
+        HTextAlign = "Center",
+        Color = Colors.LightGray,
+        FontSixe = FSize
+      }
+    )
+    x = x + textboxSize[1]
+  end
+  y = y + labelSize[2] + 4
+  x = 4
+  table.insert(
+    graphics,
+    {
+      Type = "Label",
+      Position = {x, y},
+      Size = labelSize,
+      Text = "Fading",
+      HTextAlign = "Right",
+      Color = Colors.LightGray,
+      FontSixe = FSize
+    }
+  )
+  x = x + labelSize[1] + 8
+
+  for i = 1, props["Output Count"].Value do
+    layout["fading_" .. i] = {
+      Style = "Led",
+      Position = {x + 10, y},
+      PrettyName = "Output " .. i .. "~Fading",
+      Size = {buttonSize[2], buttonSize[2]},
+      FontSize = FSize - 2,
+      Padding = 0,
+      Color = Colors.Green
+    }
+    x = x + textboxSize[1]
+  end
+  y = y + labelSize[2] + 4
+  x = 4
   table.insert(
     graphics,
     {
@@ -44,26 +111,16 @@ if current_page == PageNames[1] then --Routing
   x = x + labelSize[1] + 8
 
   for i = 1, props["Output Count"].Value do
-    layout["select." .. i] = {
-      Style = "ComboBox",
+    layout["select_" .. i] = {
+      Style = "Text",
       Position = {x, y},
       PrettyName = "Output " .. i .. "~Select",
       Size = textboxSize,
       FontSize = FSize - 2,
-      Padding = 0
+      Padding = 0,
+      Color = Colors.White,
+      TextBoxStyle = "Normal"
     }
-    table.insert(
-      graphics,
-      {
-        Type = "Label",
-        Position = {x, y - labelSize[2]},
-        Size = textboxSize,
-        Text = tostring(i),
-        HTextAlign = "Center",
-        Color = Colors.LightGray,
-        FontSixe = FSize
-      }
-    )
     x = x + textboxSize[1]
   end
 
@@ -85,7 +142,7 @@ if current_page == PageNames[1] then --Routing
     )
     x = x + labelSize[1] + 8
     for out = 1, props["Output Count"].Value do
-      layout["Output." .. out .. ".input." .. i .. ".select"] = {
+      layout["output_" .. out .. "_input_" .. i .. "_select"] = {
         Style = "Button",
         ButtonStyle = "Toggle",
         Position = {x, y},

@@ -35,4 +35,15 @@ for x = 1, (props["Output Count"].Value) do
       }
     }
   )
+  table.insert(
+    components,
+    {
+      Name = "Gain" .. x,
+      Type = "gain",
+      Properties = {
+        ["multi_channel_type"] = multiTypeIndex,
+        ["multi_channel_count"] = props["Count"].Value
+      }
+    }
+  )
 end

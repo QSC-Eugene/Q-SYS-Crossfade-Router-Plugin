@@ -1,13 +1,34 @@
--- table.insert(ctrls,{Name = "code",ControlType = "Text",PinStyle = "Input",Count = 1})
-
 for x = 1, props["Output Count"].Value do
   table.insert(
     ctrls,
     {
-      Name = "select." .. x,
-      ControlType = "Text",
+      Name = "select_" .. x,
+      ControlType = "Knob",
+      ControlUnit = "Integer",
       DefaultValue = 1,
       PinStyle = "Both",
+      UserPin = true,
+      Min = 1,
+      Max = props["Input Count"].Value
+    }
+  )
+  table.insert(
+    ctrls,
+    {
+      Name = "mute_" .. x,
+      ControlType = "Button",
+      ButtonType = "Toggle",
+      PinStyle = "Both",
+      UserPin = true
+    }
+  )
+  table.insert(
+    ctrls,
+    {
+      Name = "fading_" .. x,
+      ControlType = "Indicator",
+      IndicatorType = "Led",
+      PinStyle = "Output",
       UserPin = true
     }
   )
@@ -15,7 +36,7 @@ for x = 1, props["Output Count"].Value do
     table.insert(
       ctrls,
       {
-        Name = "Output." .. x .. ".input." .. y .. ".select",
+        Name = "output_" .. x .. "_input_" .. y .. "_select",
         ControlType = "Button",
         PinStyle = "Both",
         UserPin = true,
@@ -43,7 +64,6 @@ table.insert(
     Name = "Crossfade Type",
     ControlType = "Text",
     PinStyle = "Both",
-    UserPin = true,
-
+    UserPin = true
   }
 )

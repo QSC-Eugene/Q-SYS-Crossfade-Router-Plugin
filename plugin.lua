@@ -1,3 +1,7 @@
+-- Eugene Dunn
+-- QSC
+-- June 2023
+
 --[[ #include "info.lua" ]]
 local Colors = {
   White = {255, 255, 255},
@@ -18,7 +22,6 @@ end
 -- The name that will initially display when dragged into a design
 function GetPrettyName(props)
   return PluginInfo.Name .. "\r" .. PluginInfo.Version
-  -- return "Vaddio" .. props["Model"].Value .. " " .. PluginInfo.Version
 end
 
 -- Optional function used if plugin has multiple pages
