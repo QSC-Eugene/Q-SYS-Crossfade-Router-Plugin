@@ -1,14 +1,10 @@
--- Eugene Dunn
--- QSC
--- June 2023
-
 PluginInfo = {
   Name = "Crossfade Router",
   Author = "Eugene Dunn",
-  BuildVersion = "1.2.1.0",
-  Version = "1.2",
+  BuildVersion = "1.3.1.1",
+  Version = "1.3.1.1",
   Id = "333c8f3d-a3e4-46fe-9c44-d76e3d95d188",
-  Description = "A drop in replacement for a Router Component that utilizes internal crossfaders"
+  Description = ""
 }
 local Colors = {
   White = {255, 255, 255},
@@ -29,6 +25,7 @@ end
 -- The name that will initially display when dragged into a design
 function GetPrettyName(props)
   return PluginInfo.Name .. "\r" .. PluginInfo.Version
+  -- return "Vaddio" .. props["Model"].Value .. " " .. PluginInfo.Version
 end
 
 -- Optional function used if plugin has multiple pages
@@ -49,9 +46,9 @@ function GetProperties()
     {
       Name = "Input Count",
       Type = "integer",
-      Value = 8,
+      Value = 4,
       Min = 2,
-      Max = 32
+      Max = 128
     }
   )
   table.insert(
@@ -59,9 +56,9 @@ function GetProperties()
     {
       Name = "Output Count",
       Type = "integer",
-      Value = 8,
-      Min = 1,
-      Max = 32
+      Value = 4,
+      Min = 2,
+      Max = 128
     }
   )
   table.insert(
@@ -83,6 +80,7 @@ function GetProperties()
       Max = 64
     }
   )
+  
   return props
 end
 
@@ -217,17 +215,6 @@ function GetComponents(props)
         }
       }
     )
-    table.insert(
-      components,
-      {
-        Name = "Gain" .. x,
-        Type = "gain",
-        Properties = {
-          ["multi_channel_type"] = multiTypeIndex,
-          ["multi_channel_count"] = props["Count"].Value
-        }
-      }
-    )
   end
   return components
 end
@@ -249,15 +236,8 @@ function GetWiring(props)
       table.insert(
         wiring,
         {
-          "Gain" .. x .. " Output",
-          "Output " .. x
-        }
-      )
-      table.insert(
-        wiring,
-        {
           "XFader" .. x .. " Output",
-          "Gain" .. x .. " Input"
+          "Output " .. x
         }
       )
       table.insert(
@@ -296,29 +276,15 @@ function GetWiring(props)
       table.insert(
         wiring,
         {
-          "Gain" .. x .. " Output Left",
+          "XFader" .. x .. " Output Left",
           "Output " .. x .. " Left"
         }
       )
       table.insert(
         wiring,
         {
-          "Gain" .. x .. " Output Right",
-          "Output " .. x .. " Right"
-        }
-      )
-      table.insert(
-        wiring,
-        {
-          "XFader" .. x .. " Output Left",
-          "Gain" .. x .. " Input Left"
-        }
-      )
-      table.insert(
-        wiring,
-        {
           "XFader" .. x .. " Output Right",
-          "Gain" .. x .. " Input Right"
+          "Output " .. x .. " Right"
         }
       )
       table.insert(
@@ -367,15 +333,8 @@ function GetWiring(props)
         table.insert(
           wiring,
           {
-            "Gain" .. x .. " Output Channel " .. y,
-            "Output " .. x .. " Channel " .. y
-          }
-        )
-        table.insert(
-          wiring,
-          {
             "XFader" .. x .. " Output Channel " .. y,
-            "Gain" .. x .. " Input Channel " .. y
+            "Output " .. x .. " Channel " .. y
           }
         )
         table.insert(
@@ -401,37 +360,16 @@ end
 -- Defines the Controls used within the plugin
 function GetControls(props)
   local ctrls = {}
+  -- table.insert(ctrls,{Name = "code",ControlType = "Text",PinStyle = "Input",Count = 1})
+  
   for x = 1, props["Output Count"].Value do
     table.insert(
       ctrls,
       {
-        Name = "select_" .. x,
-        ControlType = "Knob",
-        ControlUnit = "Integer",
+        Name = "select." .. x,
+        ControlType = "Text",
         DefaultValue = 1,
         PinStyle = "Both",
-        UserPin = true,
-        Min = 1,
-        Max = props["Input Count"].Value
-      }
-    )
-    table.insert(
-      ctrls,
-      {
-        Name = "mute_" .. x,
-        ControlType = "Button",
-        ButtonType = "Toggle",
-        PinStyle = "Both",
-        UserPin = true
-      }
-    )
-    table.insert(
-      ctrls,
-      {
-        Name = "fading_" .. x,
-        ControlType = "Indicator",
-        IndicatorType = "Led",
-        PinStyle = "Output",
         UserPin = true
       }
     )
@@ -439,7 +377,7 @@ function GetControls(props)
       table.insert(
         ctrls,
         {
-          Name = "output_" .. x .. "_input_" .. y .. "_select",
+          Name = "Output." .. x .. ".input." .. y .. ".select",
           ControlType = "Button",
           PinStyle = "Both",
           UserPin = true,
@@ -467,7 +405,8 @@ function GetControls(props)
       Name = "Crossfade Type",
       ControlType = "Text",
       PinStyle = "Both",
-      UserPin = true
+      UserPin = true,
+  
     }
   )
   return ctrls
@@ -477,6 +416,8 @@ end
 function GetControlLayout(props)
   local layout = {}
   local graphics = {}
+  -- layout["code"] = {PrettyName = "Code",Style = "None"}
+  
   local current_page = PageNames[props["page_index"].Value]
   
   local FSize = 11
@@ -495,7 +436,7 @@ function GetControlLayout(props)
         Position = {x + labelSize[1] + 4, y},
         Size = {
           8 + (props["Output Count"].Value * textboxSize[1]),
-          28 + ((props["Input Count"].Value + 2) * textboxSize[2]) + 44
+          28 + ((props["Input Count"].Value + 2) * textboxSize[2]) + 4
         },
         Text = "Output",
         HTextAlign = "Left",
@@ -505,76 +446,7 @@ function GetControlLayout(props)
         FontSixe = FSize
       }
     )
-    y = 28 + labelSize[2]
-    table.insert(
-      graphics,
-      {
-        Type = "Label",
-        Position = {x, y},
-        Size = labelSize,
-        Text = "Mute",
-        HTextAlign = "Right",
-        Color = Colors.LightGray,
-        FontSixe = FSize
-      }
-    )
-    x = x + labelSize[1] + 8
-  
-    for i = 1, props["Output Count"].Value do
-      layout["mute_" .. i] = {
-        Style = "Button",
-        ButtonStyle = "Toggle",
-        Position = {x, y},
-        PrettyName = "Output " .. i .. "~Mute",
-        Size = buttonSize,
-        FontSize = FSize - 2,
-        Padding = 0,
-        Color = {223, 0, 36}
-      }
-      table.insert(
-        graphics,
-        {
-          Type = "Label",
-          Position = {x, y - labelSize[2]},
-          Size = textboxSize,
-          Text = tostring(i),
-          HTextAlign = "Center",
-          Color = Colors.LightGray,
-          FontSixe = FSize
-        }
-      )
-      x = x + textboxSize[1]
-    end
-    y = y + labelSize[2] + 4
-    x = 4
-    table.insert(
-      graphics,
-      {
-        Type = "Label",
-        Position = {x, y},
-        Size = labelSize,
-        Text = "Fading",
-        HTextAlign = "Right",
-        Color = Colors.LightGray,
-        FontSixe = FSize
-      }
-    )
-    x = x + labelSize[1] + 8
-  
-    for i = 1, props["Output Count"].Value do
-      layout["fading_" .. i] = {
-        Style = "Led",
-        Position = {x + 10, y},
-        PrettyName = "Output " .. i .. "~Fading",
-        Size = {buttonSize[2], buttonSize[2]},
-        FontSize = FSize - 2,
-        Padding = 0,
-        Color = Colors.Green
-      }
-      x = x + textboxSize[1]
-    end
-    y = y + labelSize[2] + 4
-    x = 4
+    y = 28 + labelSize[2] --was 28
     table.insert(
       graphics,
       {
@@ -590,16 +462,26 @@ function GetControlLayout(props)
     x = x + labelSize[1] + 8
   
     for i = 1, props["Output Count"].Value do
-      layout["select_" .. i] = {
-        Style = "Text",
+      layout["select." .. i] = {
+        Style = "ComboBox",
         Position = {x, y},
         PrettyName = "Output " .. i .. "~Select",
         Size = textboxSize,
         FontSize = FSize - 2,
-        Padding = 0,
-        Color = Colors.White,
-        TextBoxStyle = "Normal"
+        Padding = 0
       }
+      table.insert(
+        graphics,
+        {
+          Type = "Label",
+          Position = {x, y - labelSize[2]},
+          Size = textboxSize,
+          Text = tostring(i),
+          HTextAlign = "Center",
+          Color = Colors.LightGray,
+          FontSixe = FSize
+        }
+      )
       x = x + textboxSize[1]
     end
   
@@ -621,7 +503,7 @@ function GetControlLayout(props)
       )
       x = x + labelSize[1] + 8
       for out = 1, props["Output Count"].Value do
-        layout["output_" .. out .. "_input_" .. i .. "_select"] = {
+        layout["Output." .. out .. ".input." .. i .. ".select"] = {
           Style = "Button",
           ButtonStyle = "Toggle",
           Position = {x, y},
@@ -697,112 +579,21 @@ if Controls then
   Inputs = Properties["Input Count"].Value
   Outputs = Properties["Output Count"].Value
   
-    local XFaders = {
-      XFader1,
-      XFader2,
-      XFader3,
-      XFader4,
-      XFader5,
-      XFader6,
-      XFader7,
-      XFader8,
-      XFader9,
-      XFader10,
-      XFader11,
-      XFader12,
-      XFader13,
-      XFader14,
-      XFader15,
-      XFader16,
-      XFader17,
-      XFader18,
-      XFader19,
-      XFader20,
-      XFader21,
-      XFader22,
-      XFader23,
-      XFader24,
-      XFader25,
-      XFader26,
-      XFader27,
-      XFader28,
-      XFader29,
-      XFader30,
-      XFader31,
-      XFader32,
-      XFader33,
-      XFader34,
-      XFader35,
-      XFader36,
-      XFader37,
-      XFader38,
-      XFader39,
-      XFader40,
-      XFader41,
-      XFader42,
-      XFader43,
-      XFader44,
-      XFader45,
-      XFader46,
-      XFader47,
-      XFader48,
-      XFader49,
-      XFader50,
-      XFader51,
-      XFader52,
-      XFader53,
-      XFader54,
-      XFader55,
-      XFader56,
-      XFader57,
-      XFader58,
-      XFader59,
-      XFader60,
-      XFader61,
-      XFader62,
-      XFader63,
-      XFader64
-    }
-    local Gains = {
-      Gain1,
-      Gain2,
-      Gain3,
-      Gain4,
-      Gain5,
-      Gain6,
-      Gain7,
-      Gain8,
-      Gain9,
-      Gain10,
-      Gain11,
-      Gain12,
-      Gain13,
-      Gain14,
-      Gain15,
-      Gain16,
-      Gain17,
-      Gain18,
-      Gain19,
-      Gain20,
-      Gain21,
-      Gain22,
-      Gain23,
-      Gain24,
-      Gain25,
-      Gain26,
-      Gain27,
-      Gain28,
-      Gain29,
-      Gain30,
-      Gain31,
-      Gain32
-    }
+    XFaders = {}
+    for i = 1, Properties["Output Count"].Value do
+      table.insert(XFaders,_G["XFader" .. i])
+    end
   local CurrentSource = {}
   
+  local choices = {}
+  for x = 1, Inputs do
+    table.insert(choices, x)
+  end
+  
   function SetFB(outputIndex)
-    Controls["select_" .. outputIndex].Value = CurrentSource[outputIndex]
+    Controls["select." .. outputIndex].String = CurrentSource[outputIndex]
     for y = 1, Inputs do
-      Controls["output_" .. outputIndex .. "_input_" .. y .. "_select"].Boolean = (y == CurrentSource[outputIndex])
+      Controls["Output." .. outputIndex .. ".input." .. y .. ".select"].Boolean = (y == CurrentSource[outputIndex])
     end
   end
   
@@ -815,6 +606,7 @@ if Controls then
   end
   
   for x = 1, Outputs do
+    Controls["select." .. x].Choices = choices
     if XFaders[x]["crossfade.to.A"].Boolean then
       CurrentSource[x] = math.floor(Router["select." .. x].Value)
     else
@@ -822,27 +614,17 @@ if Controls then
     end
     SetFB(x)
   
-    Controls["select_" .. x].EventHandler = function(ctrl)
-      GotoSource(ctrl.Value, x)
+    Controls["select." .. x].EventHandler = function(ctrl)
+      GotoSource(tonumber(ctrl.String), x)
     end
     for y = 1, Inputs do
-      Controls["output_" .. x .. "_input_" .. y .. "_select"].EventHandler = function(ctrl)
+      Controls["Output." .. x .. ".input." .. y .. ".select"].EventHandler = function(ctrl)
         if ctrl.Boolean then
           GotoSource(y, x)
         elseif not ctrl.Boolean and y == CurrentSource[x] then
           ctrl.Boolean = true
         end
       end
-    end
-  
-    XFaders[x].position.EventHandler = function(ctrl)
-      Controls["fading_" .. x].Boolean = not (ctrl.Position == 1 or ctrl.Position == 0)
-    end
-    Gains[x].mute.EventHandler = function(ctrl)
-      Controls["mute_" .. x].Boolean = ctrl.Boolean
-    end
-    Controls["mute_" .. x].EventHandler = function(ctrl)
-      Gains[x].mute.Boolean = ctrl.Boolean
     end
   end
   
@@ -851,13 +633,13 @@ if Controls then
     Controls["Crossfade Type"].String = XFaders[1]["crossfade.type"].String
   end
   Controls["Crossfade Type"].EventHandler = function(ctrl)
-    for x = 1, Outputs do
+    for x = 1, (Outputs) do
       XFaders[x]["crossfade.type"].String = ctrl.String
     end
   end
   Controls["Crossfade Time"].Value = XFaders[1]["crossfade.time"].Value
   Controls["Crossfade Time"].EventHandler = function(ctrl)
-    for x = 1, Outputs do
+    for x = 1, (Outputs) do
       XFaders[x]["crossfade.time"].Value = ctrl.Value
     end
   end
