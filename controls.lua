@@ -9,7 +9,8 @@ for x = 1, props["Output Count"].Value do
       PinStyle = "Both",
       UserPin = true,
       Min = 1,
-      Max = props["Input Count"].Value
+      Max = props["Input Count"].Value,
+      Description = "Selects the input to be crossfaded to the coresponding output."
     }
   )
   table.insert(
@@ -19,7 +20,8 @@ for x = 1, props["Output Count"].Value do
       ControlType = "Button",
       ButtonType = "Toggle",
       PinStyle = "Both",
-      UserPin = true
+      UserPin = true,
+      Description = "Mutes the output."
     }
   )
   table.insert(
@@ -29,7 +31,8 @@ for x = 1, props["Output Count"].Value do
       ControlType = "Indicator",
       IndicatorType = "Led",
       PinStyle = "Output",
-      UserPin = true
+      UserPin = true,
+      Description = "Indicates that the output is fading."
     }
   )
   for y = 1, props["Input Count"].Value do
@@ -40,7 +43,8 @@ for x = 1, props["Output Count"].Value do
         ControlType = "Button",
         PinStyle = "Both",
         UserPin = true,
-        ButtonType = "Toggle"
+        ButtonType = "Toggle",
+        Description = "Selects a specific input to be crossfaded to the coresponding output."
       }
     )
   end
@@ -49,21 +53,23 @@ end
 table.insert(
   ctrls,
   {
-    Name = "Crossfade Time",
+    Name = "crossfade_time",
     ControlType = "Knob",
     PinStyle = "Both",
     UserPin = true,
     ControlUnit = "Float",
     Min = 0.01,
-    Max = 100
+    Max = 100,
+    Description = "The time it takes to crossfade between inputs." 
   }
 )
 table.insert(
   ctrls,
   {
-    Name = "Crossfade Type",
+    Name = "crossfade_type",
     ControlType = "Text",
     PinStyle = "Both",
-    UserPin = true
+    UserPin = true,
+    Description = "The type of crossfade to use.",
   }
 )

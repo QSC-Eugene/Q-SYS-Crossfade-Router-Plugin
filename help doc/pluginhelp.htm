@@ -1,0 +1,74 @@
+<!DOCTYPE html><html><head><link rel="stylesheet" href="PluginHelpStyles.css"><title>Crossfade Router</title></head><body>
+	<div>
+    <!-- <p style="text-align: center;"><img src="placeholderBanner.png"></p> -->
+    <h1>Crossfade Router</h1>
+  </div>
+  <div>
+  <!-- Plugin Description -->
+    <div id="pluginDescription">
+      <p>A drop in replacement for a Router Component that utilizes internal crossfaders.</p>
+    </div>
+  <!-- Index -->
+    <h2>Index</h2>
+    <ul style="list-style-type: square;">
+      <li><a href="#Properti">Properties</a>
+      </li>
+      <li><a href="#Controls">Controls</a>
+      </li>
+      <li><a href="#Control">Control Pins</a>
+      </li>
+    </ul>
+  <!-- Properties -->
+    <h2 id="Properti"><a name="Properti"></a>Properties</h2>
+    <div id="properties">
+      <div><h4 class="BridgeHead">Input Count</h4><p>Number of inputs on the router.</p><p>Type: integer</p><p>Default Value: 8</p><p>Min: 2</p><p>Max: 128</p></div>
+      <div><h4 class="BridgeHead">Output Count</h4><p>Number of outputs on the router.</p><p>Type: integer</p><p>Default Value: 8</p><p>Min: 1</p><p>Max: 128</p></div>
+      <div><h4 class="BridgeHead">Type</h4><p>Type of router. Can be Mono, Stereo or Multi-channel.</p><p>Type: enum</p><p>Default Value: Mono</p><p>Choices:</p><ul><li>Mono</li><li>Stereo</li><li>Multi-channel</li></ul></div>
+      <div><h4 class="BridgeHead">Count</h4><p>Number of channels per input or output when Type is set to Multi-channel.</p><p>Type: integer</p><p>Default Value: 8</p><p>Min: 2</p><p>Max: 64</p></div>
+      <div><h4 class="BridgeHead">Show Debug</h4><p>Show debug messages in the console</p><p>Type: Boolean</p><p>Default Value: false</p></div>
+    </div>
+  <!-- Controls -->
+    <h2 id="Controls"><a name="Controls"></a>Controls</h2>
+    <div id="controls">
+      <div><h4 class="BridgeHead">crossfade.time</h4><p><b>Float Knob</b></p><p>The time it takes to crossfade between inputs in seconds.</p><p>Min: 0.01</p><p>Max: 100</p></div>
+      <div><h4 class="BridgeHead">crossfade.type</h4><p><b>Text Control</b></p><p>The type of crossfade to use.</p></div>
+      <div><h4 class="BridgeHead">fading.n</h4><p><b>LED Indicator</b></p><p>Indicates that the output is fading.</p></div>
+      <div><h4 class="BridgeHead">mute.n</h4><p><b>Toggle Button</b></p><p>Mutes the output.</p></div>
+      <div><h4 class="BridgeHead">output.[output].input.[input].select</h4><p><b>Toggle Button</b></p><p>Selects a specific input to be crossfaded to the coresponding output.</p></div>
+      <div><h4 class="BridgeHead">select.n</h4><p><b>Integer Knob</b></p><p>Selects the input to be crossfaded to the coresponding output.</p><p>Min: 1</p><p>Max: Number of outputs</p></div>
+    </div>
+    </div> 
+  <!-- Control Pins -->
+    <h2 id="Control"><a name="Control"></a>Control Pins</h2>
+    <div id="controlPins">
+      <table class="TableStyle-ControlPins" cellspacing="0">
+        <colgroup><col style="width: 226px;">
+        <col>
+        <col>
+        <col style="width: 85px;">
+        <col>
+        </colgroup><thead>
+          <tr>
+            <th>Pin Name</th>
+            <th>Value</th>
+            <th>String</th>
+            <th>Position</th>
+            <th>Pins Available</th>
+          </tr>
+        </thead>
+        <tbody id="controlPinTableBody">
+          <tr><td colspan="5"><p>Crossfader Settings</p></td></tr>
+          <tr><td><p class="P1">Crossfade Time</p></td><td style="text-align: center;" colspan="3"></td><td style="text-align: center;"><p>Input/Output</p></td></tr>
+          <tr><td><p class="P1">Crossfade Type</p></td><td style="text-align: center;" colspan="3"></td><td style="text-align: center;"><p>Input/Output</p></td></tr>
+          <tr><td colspan="5"><p>Output n</p></td></tr>
+          <tr><td><p class="P1">Fading</p></td><td style="text-align: center;" colspan="3"></td><td style="text-align: center;"><p>Output</p></td></tr>
+          <tr><td><p class="P1">Input n Select</p></td><td style="text-align: center;" colspan="3"></td><td style="text-align: center;"><p>Input/Output</p></td></tr>
+          <tr><td><p class="P1">Mute</p></td><td style="text-align: center;" colspan="3"></td><td style="text-align: center;"><p>Input/Output</p></td></tr>
+          <tr><td><p class="P1">Select</p></td><td style="text-align: center;" colspan="3"></td><td style="text-align: center;"><p>Input/Output</p></td></tr>
+          <tr><td><p>Disable<a href="#Use"><sup>1</sup></a></p></td><td style="text-align: center;"><p>0</p><p>1</p></td><td style="text-align: center;"><p>disabled</p><p>enabled</p></td><td style="text-align: center;"><p>0</p><p>1</p></td><td style="text-align: center;"><p style="text-align: center;">Input / Output</p></td></tr>
+      </tbody>
+      </table>
+      <h6><a name="Use"></a>1. Use this control pin to enable or disable the plugin in your design. When Disabled is set
+      to enabled (value of 1), the Connection Status changes to "Not Present - Disabled".</h6>
+    </div> 
+</body></html>

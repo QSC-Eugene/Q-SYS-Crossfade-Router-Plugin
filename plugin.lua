@@ -1,7 +1,3 @@
--- Eugene Dunn
--- QSC
--- June 2023
-
 --[[ #include "info.lua" ]]
 local Colors = {
   White = {255, 255, 255},

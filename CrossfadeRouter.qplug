@@ -1,12 +1,8 @@
--- Eugene Dunn
--- QSC
--- June 2023
-
 PluginInfo = {
   Name = "Crossfade Router",
   Author = "Eugene Dunn",
-  BuildVersion = "1.3.1.2",
-  Version = "1.3.1.2",
+  BuildVersion = "1.3.2.0",
+  Version = "1.3.2.0",
   Id = "333c8f3d-a3e4-46fe-9c44-d76e3d95d188",
   Description = "A drop in replacement for a Router Component that utilizes internal crossfaders"
 }
@@ -51,7 +47,8 @@ function GetProperties()
       Type = "integer",
       Value = 8,
       Min = 2,
-      Max = 128
+      Max = 128,
+      Description = "Number of inputs on the router."
     }
   )
   table.insert(
@@ -61,7 +58,8 @@ function GetProperties()
       Type = "integer",
       Value = 8,
       Min = 1,
-      Max = 128
+      Max = 128,
+      Description = "Number of outputs on the router."
     }
   )
   table.insert(
@@ -70,7 +68,8 @@ function GetProperties()
       Name = "Type",
       Type = "enum",
       Value = "Mono",
-      Choices = {"Mono", "Stereo", "Multi-channel"}
+      Choices = {"Mono", "Stereo", "Multi-channel"},
+      Description = "Type of router. Can be Mono, Stereo or Multi-channel.",
     }
   )
   table.insert(
@@ -80,7 +79,8 @@ function GetProperties()
       Type = "integer",
       Value = 8,
       Min = 2,
-      Max = 64
+      Max = 64,
+      Description = "Number of channels per input or output when Type is set to Multi-channel.",
     }
   )
   return props
@@ -412,7 +412,8 @@ function GetControls(props)
         PinStyle = "Both",
         UserPin = true,
         Min = 1,
-        Max = props["Input Count"].Value
+        Max = props["Input Count"].Value,
+        Description = "Selects the input to be crossfaded to the coresponding output."
       }
     )
     table.insert(
@@ -422,7 +423,8 @@ function GetControls(props)
         ControlType = "Button",
         ButtonType = "Toggle",
         PinStyle = "Both",
-        UserPin = true
+        UserPin = true,
+        Description = "Mutes the output."
       }
     )
     table.insert(
@@ -432,7 +434,8 @@ function GetControls(props)
         ControlType = "Indicator",
         IndicatorType = "Led",
         PinStyle = "Output",
-        UserPin = true
+        UserPin = true,
+        Description = "Indicates that the output is fading."
       }
     )
     for y = 1, props["Input Count"].Value do
@@ -443,7 +446,8 @@ function GetControls(props)
           ControlType = "Button",
           PinStyle = "Both",
           UserPin = true,
-          ButtonType = "Toggle"
+          ButtonType = "Toggle",
+          Description = "Selects a specific input to be crossfaded to the coresponding output."
         }
       )
     end
@@ -452,22 +456,24 @@ function GetControls(props)
   table.insert(
     ctrls,
     {
-      Name = "Crossfade Time",
+      Name = "crossfade_time",
       ControlType = "Knob",
       PinStyle = "Both",
       UserPin = true,
       ControlUnit = "Float",
       Min = 0.01,
-      Max = 100
+      Max = 100,
+      Description = "The time it takes to crossfade between inputs." 
     }
   )
   table.insert(
     ctrls,
     {
-      Name = "Crossfade Type",
+      Name = "crossfade_type",
       ControlType = "Text",
       PinStyle = "Both",
-      UserPin = true
+      UserPin = true,
+      Description = "The type of crossfade to use.",
     }
   )
   return ctrls
@@ -675,18 +681,19 @@ function GetControlLayout(props)
       }
     )
   
-    layout["Crossfade Time"] = {
+    layout["crossfade_time"] = {
       Style = "Knob",
       Position = {80, 28},
       Size = {36, 36},
-      ShowTextBox = true
+      PrettyName = "Crossfader Settings~Crossfade Time",
     }
-    layout["Crossfade Type"] = {
+    layout["crossfade_type"] = {
       Style = "ComboBox",
       Position = {80, 64},
       Size = {170, 16},
       FontSize = FSize - 2,
-      Padding = 0
+      Padding = 0,
+      PrettyName = "Crossfader Settings~Crossfade Type",
     }
   end
   return layout, graphics
@@ -752,17 +759,17 @@ if Controls then
     end
   end
   
-  Controls["Crossfade Type"].Choices = {"-6dB Constant Gain", "-3dB Constant Power"}
-  if Controls["Crossfade Type"].String == "" then
-    Controls["Crossfade Type"].String = XFaders[1]["crossfade.type"].String
+  Controls["crossfade_type"].Choices = {"-6dB Constant Gain", "-3dB Constant Power"}
+  if Controls["crossfade_type"].String == "" then
+    Controls["crossfade_type"].String = XFaders[1]["crossfade.type"].String
   end
-  Controls["Crossfade Type"].EventHandler = function(ctrl)
+  Controls["crossfade_type"].EventHandler = function(ctrl)
     for x = 1, Outputs do
       XFaders[x]["crossfade.type"].String = ctrl.String
     end
   end
-  Controls["Crossfade Time"].Value = XFaders[1]["crossfade.time"].Value
-  Controls["Crossfade Time"].EventHandler = function(ctrl)
+  Controls["crossfade_time"].Value = XFaders[1]["crossfade.time"].Value
+  Controls["crossfade_time"].EventHandler = function(ctrl)
     for x = 1, Outputs do
       XFaders[x]["crossfade.time"].Value = ctrl.Value
     end

@@ -196,17 +196,18 @@ elseif current_page == PageNames[2] then --Settings
     }
   )
 
-  layout["Crossfade Time"] = {
+  layout["crossfade_time"] = {
     Style = "Knob",
     Position = {80, 28},
     Size = {36, 36},
-    ShowTextBox = true
+    PrettyName = "Crossfader Settings~Crossfade Time",
   }
-  layout["Crossfade Type"] = {
+  layout["crossfade_type"] = {
     Style = "ComboBox",
     Position = {80, 64},
     Size = {170, 16},
     FontSize = FSize - 2,
-    Padding = 0
+    Padding = 0,
+    PrettyName = "Crossfader Settings~Crossfade Type",
   }
 end

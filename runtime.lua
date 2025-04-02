@@ -56,17 +56,17 @@ for x = 1, Outputs do
   end
 end
 
-Controls["Crossfade Type"].Choices = {"-6dB Constant Gain", "-3dB Constant Power"}
-if Controls["Crossfade Type"].String == "" then
-  Controls["Crossfade Type"].String = XFaders[1]["crossfade.type"].String
+Controls["crossfade_type"].Choices = {"-6dB Constant Gain", "-3dB Constant Power"}
+if Controls["crossfade_type"].String == "" then
+  Controls["crossfade_type"].String = XFaders[1]["crossfade.type"].String
 end
-Controls["Crossfade Type"].EventHandler = function(ctrl)
+Controls["crossfade_type"].EventHandler = function(ctrl)
   for x = 1, Outputs do
     XFaders[x]["crossfade.type"].String = ctrl.String
   end
 end
-Controls["Crossfade Time"].Value = XFaders[1]["crossfade.time"].Value
-Controls["Crossfade Time"].EventHandler = function(ctrl)
+Controls["crossfade_time"].Value = XFaders[1]["crossfade.time"].Value
+Controls["crossfade_time"].EventHandler = function(ctrl)
   for x = 1, Outputs do
     XFaders[x]["crossfade.time"].Value = ctrl.Value
   end
