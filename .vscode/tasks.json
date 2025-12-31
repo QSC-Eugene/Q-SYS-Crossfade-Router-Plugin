@@ -10,7 +10,7 @@
             },
             "command": "echo Update QSD Plugin",
             "windows": {
-                "command": ".\\plugincompile\\copy_plugin.cmd ${workspaceFolder} CrossfadeRouter",
+                "command": ".\\plugincompile\\copy_plugin.cmd \"${workspaceFolder}\" CrossfadeRouter",
                 "options": {
                     "shell": {
                         "executable": "cmd.exe",
@@ -30,7 +30,7 @@
             "group": "build",
             "command": "echo Compile Plugin",
             "windows": {
-                "command": ".\\plugincompile\\PLUGCC.exe CrossfadeRouter ${workspaceFolder}\\plugin.lua",
+                "command": ".\\plugincompile\\PLUGCC.exe CrossfadeRouter \"${workspaceFolder}\\plugin.lua\"",
                 "options": {
                     "shell": {
                         "executable": "cmd.exe",
