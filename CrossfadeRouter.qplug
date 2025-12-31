@@ -413,7 +413,7 @@ function GetControls(props)
         UserPin = true,
         Min = 1,
         Max = props["Input Count"].Value,
-        Description = "Selects the input to be crossfaded to the coresponding output."
+        Description = "Selects the input to be crossfaded to the corresponding output."
       }
     )
     table.insert(
@@ -447,7 +447,7 @@ function GetControls(props)
           PinStyle = "Both",
           UserPin = true,
           ButtonType = "Toggle",
-          Description = "Selects a specific input to be crossfaded to the coresponding output."
+          Description = "Selects a specific input to be crossfaded to the corresponding output."
         }
       )
     end

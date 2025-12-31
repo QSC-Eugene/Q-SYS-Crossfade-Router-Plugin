@@ -10,7 +10,7 @@ for x = 1, props["Output Count"].Value do
       UserPin = true,
       Min = 1,
       Max = props["Input Count"].Value,
-      Description = "Selects the input to be crossfaded to the coresponding output."
+      Description = "Selects the input to be crossfaded to the corresponding output."
     }
   )
   table.insert(
@@ -44,7 +44,7 @@ for x = 1, props["Output Count"].Value do
         PinStyle = "Both",
         UserPin = true,
         ButtonType = "Toggle",
-        Description = "Selects a specific input to be crossfaded to the coresponding output."
+        Description = "Selects a specific input to be crossfaded to the corresponding output."
       }
     )
   end
