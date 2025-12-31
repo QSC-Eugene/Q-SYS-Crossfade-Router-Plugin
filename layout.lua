@@ -23,7 +23,7 @@ if current_page == PageNames[1] then --Routing
       StrokeColor = Colors.LightGray,
       StrokeWidth = 1,
       CornerRadius = 8,
-      FontSixe = FSize
+      FontSize = FSize
     }
   )
   y = 28 + labelSize[2]
@@ -36,7 +36,7 @@ if current_page == PageNames[1] then --Routing
       Text = "Mute",
       HTextAlign = "Right",
       Color = Colors.LightGray,
-      FontSixe = FSize
+      FontSize = FSize
     }
   )
   x = x + labelSize[1] + 8
@@ -61,7 +61,7 @@ if current_page == PageNames[1] then --Routing
         Text = tostring(i),
         HTextAlign = "Center",
         Color = Colors.LightGray,
-        FontSixe = FSize
+        FontSize = FSize
       }
     )
     x = x + textboxSize[1]
@@ -77,7 +77,7 @@ if current_page == PageNames[1] then --Routing
       Text = "Fading",
       HTextAlign = "Right",
       Color = Colors.LightGray,
-      FontSixe = FSize
+      FontSize = FSize
     }
   )
   x = x + labelSize[1] + 8
@@ -105,7 +105,7 @@ if current_page == PageNames[1] then --Routing
       Text = "Input",
       HTextAlign = "Right",
       Color = Colors.LightGray,
-      FontSixe = FSize
+      FontSize = FSize
     }
   )
   x = x + labelSize[1] + 8
@@ -137,7 +137,7 @@ if current_page == PageNames[1] then --Routing
         Text = tostring(i),
         HTextAlign = "Right",
         Color = Colors.LightGray,
-        FontSixe = FSize
+        FontSize = FSize
       }
     )
     x = x + labelSize[1] + 8
@@ -168,7 +168,7 @@ elseif current_page == PageNames[2] then --Settings
       StrokeColor = Colors.LightGray,
       StrokeWidth = 1,
       CornerRadius = 8,
-      FontSixe = FSize
+      FontSize = FSize
     }
   )
   table.insert(
@@ -180,7 +180,7 @@ elseif current_page == PageNames[2] then --Settings
       Text = "Time",
       HTextAlign = "Right",
       Color = Colors.LightGray,
-      FontSixe = FSize
+      FontSize = FSize
     }
   )
   table.insert(
@@ -192,7 +192,7 @@ elseif current_page == PageNames[2] then --Settings
       Text = "Type",
       HTextAlign = "Right",
       Color = Colors.LightGray,
-      FontSixe = FSize
+      FontSize = FSize
     }
   )
 

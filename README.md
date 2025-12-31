@@ -15,6 +15,10 @@ Note: Fading LED will only light when running on a core. this is a limitation of
 
 ## Release Notes
 
+### 1.3.2.1
+
+- Fix typo for font size in layout
+
 ### 1.3.2.0
 
 - Added Control Descriptions

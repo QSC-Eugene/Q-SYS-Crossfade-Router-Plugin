@@ -1,8 +1,8 @@
 PluginInfo = {
   Name = "Crossfade Router",
   Author = "Eugene Dunn",
-  BuildVersion = "1.3.2.0",
-  Version = "1.3.2.0",
+  BuildVersion = "1.3.2.1",
+  Version = "1.3.2.1",
   Id = "333c8f3d-a3e4-46fe-9c44-d76e3d95d188",
   Description = "A drop in replacement for a Router Component that utilizes internal crossfaders"
 }
@@ -508,7 +508,7 @@ function GetControlLayout(props)
         StrokeColor = Colors.LightGray,
         StrokeWidth = 1,
         CornerRadius = 8,
-        FontSixe = FSize
+        FontSize = FSize
       }
     )
     y = 28 + labelSize[2]
@@ -521,7 +521,7 @@ function GetControlLayout(props)
         Text = "Mute",
         HTextAlign = "Right",
         Color = Colors.LightGray,
-        FontSixe = FSize
+        FontSize = FSize
       }
     )
     x = x + labelSize[1] + 8
@@ -546,7 +546,7 @@ function GetControlLayout(props)
           Text = tostring(i),
           HTextAlign = "Center",
           Color = Colors.LightGray,
-          FontSixe = FSize
+          FontSize = FSize
         }
       )
       x = x + textboxSize[1]
@@ -562,7 +562,7 @@ function GetControlLayout(props)
         Text = "Fading",
         HTextAlign = "Right",
         Color = Colors.LightGray,
-        FontSixe = FSize
+        FontSize = FSize
       }
     )
     x = x + labelSize[1] + 8
@@ -590,7 +590,7 @@ function GetControlLayout(props)
         Text = "Input",
         HTextAlign = "Right",
         Color = Colors.LightGray,
-        FontSixe = FSize
+        FontSize = FSize
       }
     )
     x = x + labelSize[1] + 8
@@ -622,7 +622,7 @@ function GetControlLayout(props)
           Text = tostring(i),
           HTextAlign = "Right",
           Color = Colors.LightGray,
-          FontSixe = FSize
+          FontSize = FSize
         }
       )
       x = x + labelSize[1] + 8
@@ -653,7 +653,7 @@ function GetControlLayout(props)
         StrokeColor = Colors.LightGray,
         StrokeWidth = 1,
         CornerRadius = 8,
-        FontSixe = FSize
+        FontSize = FSize
       }
     )
     table.insert(
@@ -665,7 +665,7 @@ function GetControlLayout(props)
         Text = "Time",
         HTextAlign = "Right",
         Color = Colors.LightGray,
-        FontSixe = FSize
+        FontSize = FSize
       }
     )
     table.insert(
@@ -677,7 +677,7 @@ function GetControlLayout(props)
         Text = "Type",
         HTextAlign = "Right",
         Color = Colors.LightGray,
-        FontSixe = FSize
+        FontSize = FSize
       }
     )
   
